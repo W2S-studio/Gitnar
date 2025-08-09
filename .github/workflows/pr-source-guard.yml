@@ -1,0 +1,43 @@
+name: pr-source-guard
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+jobs:
+  guard:
+    name: pr-source-guard
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Enforce PR source branch
+        run: |
+          base="${{ github.event.pull_request.base.ref }}"
+          head="${{ github.event.pull_request.head.ref }}"
+          baseRepo="${{ github.repository }}"
+          headRepo="${{ github.event.pull_request.head.repo.full_name }}"
+
+          err=""
+
+          # Main only accepts PRs from Stage (same repo)
+          if [ "$base" = "Main" ]; then
+            if [ "$head" != "Stage" ]; then
+              err="PRs into 'Main' must come from 'Stage'. Got head='$head'."
+            elif [ "$headRepo" != "$baseRepo" ]; then
+              err="PRs into 'Main' must come from 'Stage' in the same repository."
+            fi
+          fi
+
+          # Stage only accepts PRs from Dev (same repo)
+          if [ -z "$err" ] && [ "$base" = "Stage" ]; then
+            if [ "$head" != "Dev" ]; then
+              err="PRs into 'Stage' must come from 'Dev'. Got head='$head'."
+            elif [ "$headRepo" != "$baseRepo" ]; then
+              err="PRs into 'Stage' must come from 'Dev' in the same repository."
+            fi
+          fi
+
+          if [ -n "$err" ]; then
+            echo "::error::$err"
+            exit 1
+          fi
+
+          echo "PR source OK: $head -> $base"
