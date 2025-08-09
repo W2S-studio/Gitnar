@@ -1,0 +1,17 @@
+{
+    "name": "gitnar-fullstack",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "node start-dev.js",
+        "dev:no-browser": "docker-compose up --build",
+        "dev:detached": "docker-compose up --build -d",
+        "stop": "docker-compose down",
+        "logs": "docker-compose logs -f",
+        "logs:api": "docker-compose logs -f api",
+        "logs:spa": "docker-compose logs -f spa",
+        "logs:nginx": "docker-compose logs -f nginx",
+        "clean": "docker-compose down -v --remove-orphans",
+        "rebuild": "docker-compose down && docker-compose up --build",
+        "cert:regenerate": "docker-compose exec nginx sh -c 'openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -subj \"/C=CA/ST=QC/L=Sorel-Tracy/O=GITNAR/CN=localhost\" && nginx -s reload'"
+    }
+}

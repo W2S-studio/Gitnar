@@ -1,0 +1,56 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Api/Web/Dockerfile
+      target: development
+    container_name: gitnar-api
+    volumes:
+      - .:/app
+      - /app/Api/obj
+      - /app/Api/bin
+      - /app/Core/obj
+      - /app/Core/bin
+      - /app/Infrastructure/obj
+      - /app/Infrastructure/bin
+      - /app/Tests/obj
+      - /app/Tests/bin
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=true
+      - TRUSTED_PROXY_HOST=gitnar-nginx
+    networks:
+      - gitnar-network
+
+  spa:
+    build:
+      context: ./spa
+      dockerfile: Dockerfile
+      target: development
+    container_name: gitnar-spa
+    volumes:
+      - ./spa:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - gitnar-network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: gitnar-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+      - spa
+    networks:
+      - gitnar-network
+
+networks:
+  gitnar-network:
+    driver: bridge

@@ -1,0 +1,107 @@
+# -------- OS cruft --------
+.DS_Store
+Thumbs.db
+
+# -------- Editors / IDEs --------
+.vscode/
+.idea/
+*.suo
+*.user
+*.userossc
+*.sln.docstates
+
+# -------- .NET / C# --------
+**/bin/
+**/obj/
+**/out/
+**/Generated/
+**/TestResults/
+**/.vs/
+*.pidb
+*.svclog
+*.scc
+*.userprefs
+_BenchmarkDotNet.Artifacts/
+
+# NuGet
+*.nupkg
+*.snupkg
+# If you still have a 'packages' folder (old style), uncomment:
+# packages/
+# NuGet v3 cache (usually under %userprofile%/.nuget)
+# don’t ignore the whole ~/.nuget since it’s outside repo
+
+# Logs
+*.log
+logs/
+**/Logs/
+
+# Configuration secrets (keep templates like appsettings.Development.json)
+appsettings.*.local.json
+appsettings.Local.json
+secrets.json
+
+# EF Core
+**/Migrations/*Designer.cs
+# (designers are generated; keep the .cs migrations themselves)
+
+# -------- Node / Vue (Vite) --------
+**/node_modules/
+**/.cache/
+**/.vite/
+**/dist/
+**/coverage/
+**/pnpm-store/
+
+# Vite/ESLint caches
+**/.eslintcache
+**/.stylelintcache
+
+# Env files (keep example envs)
+.env
+.env.*.local
+# Keep these (don’t ignore):
+!.env.example
+!.env.local.example
+
+# TypeScript
+**/*.tsbuildinfo
+
+# -------- Frontend artifacts (optional) --------
+# If you export static builds into backend wwwroot, ignore them:
+**/wwwroot/assets/
+**/wwwroot/*.map
+
+# -------- Docker / Compose (safe defaults) --------
+# Compose override files used locally
+docker-compose.override.yml
+# Build caches
+**/.docker-buildx-cache/
+**/.docker-layer-cache/
+
+# -------- Nginx (dev) certs --------
+nginx/ssl/*.key
+nginx/ssl/*.crt
+nginx/ssl/*.pem
+
+# -------- Misc tools --------
+*.swp
+*.swm
+*.swn
+*.swo
+
+# -------- JetBrains Rider --------
+*.iml
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/dictionaries
+.idea/**/shelf/
+.idea/**/contentModel.xml
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/gradle.xml
+.idea/**/libraries/
